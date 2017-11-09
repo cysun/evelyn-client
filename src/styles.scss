@@ -1,1 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~materialize-css/sass/components/_color.scss";
+$roboto-font-path: "~materialize-css/dist/fonts/roboto/";
+$primary-color: color("teal", "base");
+$secondary-color: color("indigo", "lighten-1");
+@import "~materialize-css/sass/materialize.scss";
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
