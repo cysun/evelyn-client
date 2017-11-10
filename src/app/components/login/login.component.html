@@ -1,0 +1,48 @@
+<div id="index-banner" class="parallax-container" style="height: 1000px;">
+  <div class="section no-pad-bot">
+    <div class="container">
+      <br>
+      <br>
+      <h1 class="header center teal-text text-lighten-2">Evelyn Digital Library</h1>
+      <br>
+      <br>
+      <div class="row center">
+        <a href="#login" class="btn-large waves-effect waves-light teal lighten-1 modal-trigger">Sign In</a>
+      </div>
+      <br>
+      <br>
+    </div>
+  </div>
+  <div class="parallax" materialize="parallax">
+    <img src="assets/images/evelyn.jpg" alt="Unsplashed background img 1">
+  </div>
+</div>
+
+<div id="login" class="modal" materialize="modal">
+  <form action="login" method="post">
+    <br>
+    <div class="row">
+      <div class="input-field col s12 m6">
+        <input id="username" name="username" type="text" required>
+        <label for="username">Username</label>
+      </div>
+      <div class="input-field col s12 m6">
+        <input id="password" name="password" type="password" required>
+        <label for="password">Password</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s6">
+        <div class="switch">
+          <label>Remember Me
+            <input name="remember-me" type="checkbox">
+            <span class="lever"></span>
+          </label>
+        </div>
+      </div>
+      <div class="col s6 center-align">
+        <button class="btn waves-effect waves-light" type="submit" name="login">Login</button>
+      </div>
+    </div>
+  </form>
+</div>
