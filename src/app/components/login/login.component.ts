@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MaterializeAction } from 'angular2-materialize/dist';
 import { decode as jwtDecode } from 'jsonwebtoken';
 
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../core/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +19,12 @@ export class LoginComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) { }
 
+  ngOnInit() {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['bookmarks']);
+    }
+  }
+
   login(form: any): void {
     this.authService.login(this.username, this.password).subscribe(data => {
       localStorage.setItem('jwtToken', data.token);
@@ -30,12 +36,5 @@ export class LoginComponent implements OnInit {
       this.password = '';
     });
   }
-
-  ngOnInit() {
-    if (this.authService.isAuthenticated()) {
-      this.router.navigate(['bookmarks']);
-    }
-  }
-
 
 }

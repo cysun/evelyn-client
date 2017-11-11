@@ -7,12 +7,12 @@ import { MaterializeModule } from 'angular2-materialize/dist';
 import { AppComponent } from './app.component';
 import { BookmarksComponent } from './components/bookmarks/bookmarks.component';
 import { LoginComponent } from './components/login/login.component';
-import { AuthService } from './services/auth.service';
-import { ServicesModule } from './services/services.module';
+import { AuthGuard } from './core/auth.guard';
+import { CoreModule } from './core/core.module';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, pathMatch: 'full' },
-  { path: 'bookmarks', component: BookmarksComponent, canActivate: [AuthService] }
+  { path: 'bookmarks', component: BookmarksComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
@@ -26,7 +26,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     MaterializeModule,
     FormsModule,
-    ServicesModule
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

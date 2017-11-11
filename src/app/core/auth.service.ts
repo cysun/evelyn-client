@@ -1,14 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+
+import { User } from '../models/user.model';
 
 interface LoginResponse {
   token: string;
 }
 
 @Injectable()
-export class AuthService implements CanActivate {
+export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -22,15 +24,14 @@ export class AuthService implements CanActivate {
     this.router.navigate(['']);
   }
 
-  isAuthenticated(): boolean {
-    return localStorage.getItem('currentUser') != null;
+  getCurrentUser(): User {
+    const s = localStorage.getItem('currentUser');
+    return s != null ? JSON.parse(s) : null;
   }
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if (!this.isAuthenticated()) { this.router.navigate(['']); }
-    return true;
+  isAuthenticated(): boolean {
+    const currentUser = this.getCurrentUser();
+    return currentUser != null ? currentUser.exp * 1000 > Date.now() : false;
   }
 
 }

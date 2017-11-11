@@ -1,3 +1,48 @@
-<p>
-  bookmarks shown here
-</p>
+<div class="container">
+
+  <div class="row">
+    <div class="col s12">
+      <ul class="tabs" materialize="tabs">
+        <li class="tab col s3">
+          <a class="active">Recently Viewed</a>
+        </li>
+        <li class="tab col s3">
+          <a>Recently Updated</a>
+        </li>
+        <li class="tab col s3">
+          <a>Search</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <table class="bordered highlight">
+    <thead>
+      <tr>
+        <th>Book</th>
+        <th class="hide-on-small-only">Author</th>
+        <th class="hide-on-med-and-down">Last Viewed</th>
+        <th class="hide-on-small-only"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bookmark of bookmarks">
+        <td>{{bookmark.book.title}}</td>
+        <td class="hide-on-small-only">{{bookmark.book.author}}</td>
+        <td class="hide-on-med-and-down">{{bookmark.date | date:'yyyy-MM-dd hh:mm'}}</td>
+        <td class="hide-on-small-only">
+          <button class="btn-floating waves-effect waves-light cyan lighten-2">
+            <i class="material-icons">delete</i>
+          </button>
+          <button class="btn-floating waves-effect waves-light green lighten-2">
+            <i class="material-icons">file_download</i>
+          </button>
+          <button class="btn-floating waves-effect waves-light blue lighten-2">
+            <i class="material-icons">edit</i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
