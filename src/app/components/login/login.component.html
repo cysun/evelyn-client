@@ -18,16 +18,16 @@
   </div>
 </div>
 
-<div id="login" class="modal" materialize="modal">
-  <form action="login" method="post">
+<div id="login" class="modal" materialize="modal" [materializeActions]="materializeActions">
+  <form #f="ngForm" [hidden]="submitted" (ngSubmit)="login(f.value)">
     <br>
     <div class="row">
       <div class="input-field col s12 m6">
-        <input id="username" name="username" type="text" required>
+        <input id="username" name="username" type="text" required [(ngModel)]="username">
         <label for="username">Username</label>
       </div>
       <div class="input-field col s12 m6">
-        <input id="password" name="password" type="password" required>
+        <input id="password" name="password" type="password" required [(ngModel)]="password">
         <label for="password">Password</label>
       </div>
     </div>
@@ -41,7 +41,7 @@
         </div>
       </div>
       <div class="col s6 center-align">
-        <button class="btn waves-effect waves-light" type="submit" name="login">Login</button>
+        <button class="btn waves-effect waves-light" type="submit" [disabled]="!f.form.valid">Login</button>
       </div>
     </div>
   </form>

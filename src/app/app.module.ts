@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { MaterializeModule } from 'angular2-materialize/dist';
@@ -10,9 +11,8 @@ import { AuthService } from './services/auth.service';
 import { ServicesModule } from './services/services.module';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'bookmarks', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'bookmarks', component: BookmarksComponent, canActivate: [AuthService], }
+  { path: '', component: LoginComponent, pathMatch: 'full' },
+  { path: 'bookmarks', component: BookmarksComponent, canActivate: [AuthService] }
 ];
 
 @NgModule({
@@ -25,6 +25,7 @@ const routes: Routes = [
     BrowserModule,
     RouterModule.forRoot(routes),
     MaterializeModule,
+    FormsModule,
     ServicesModule
   ],
   providers: [],

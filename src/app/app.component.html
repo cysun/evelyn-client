@@ -3,10 +3,10 @@
     <div class="nav-wrapper container">
       <a href="/" class="brand-logo hide-on-med-and-down">Evelyn Digital Library</a>
       <a href="/" class="brand-logo hide-on-large-only">Evelyn</a>
-      <a href="#" materialize="sideNav" data-activates="nav-mobile" class="button-collapse">
+      <a *ngIf="authenticated" href="#" materialize="sideNav" data-activates="nav-mobile" class="button-collapse">
         <i class="material-icons">menu</i>
       </a>
-      <ul class="right hide-on-med-and-down">
+      <ul *ngIf="authenticated" class="right hide-on-med-and-down">
         <li>
           <a class="reindex modal-trigger" href="#reindex-confirm">
             <i class="material-icons">insert_chart</i>
@@ -23,12 +23,12 @@
           </a>
         </li>
         <li>
-          <a href="logout">
+          <a (click)="logout()">
             <i class="material-icons">exit_to_app</i>
           </a>
         </li>
       </ul>
-      <ul id="nav-mobile" class="side-nav">
+      <ul *ngIf="authenticated" id="nav-mobile" class="side-nav">
         <li>
           <a class="reindex modal-trigger" href="#reindex-confirm">
             <i class="material-icons">refresh</i> Rebuild Index</a>
