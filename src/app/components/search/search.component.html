@@ -4,19 +4,33 @@
     <div class="col s12">
       <ul class="tabs" materialize="tabs">
         <li class="tab col s3">
-          <a class="active">Recently Viewed</a>
+          <a [routerLink]="['/bookmarks']">Recently Viewed</a>
         </li>
         <li class="tab col s3">
           <a [routerLink]="['/books']">Recently Updated</a>
         </li>
         <li class="tab col s3">
-          <a [routerLink]="['/search']">Search</a>
+          <a class="active">Search</a>
         </li>
       </ul>
     </div>
   </div>
 
-  <table *ngIf="bookmarks.length" class="bordered highlight">
+  <form #f="ngForm" (ngSubmit)="search()">
+    <div class="row valign-wrapper left-align">
+      <div class="input-field col s8">
+        <input autofocus id="term" name="term" type="text" required [(ngModel)]="term">
+        <label class="active" for="term">Term</label>
+      </div>
+      <div class="col s4 left-align">
+        <button class="btn waves-effect waves-light" type="submit" [disabled]="!f.form.valid">
+          <i class="material-icons right">search</i>
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <table *ngIf="books.length" class="bordered highlight">
     <thead>
       <tr>
         <th>Book</th>
@@ -26,14 +40,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let bookmark of bookmarks">
-        <td>{{bookmark.book.title}}</td>
-        <td class="hide-on-small-only">{{bookmark.book.author}}</td>
-        <td class="hide-on-med-and-down">{{bookmark.date | date:'yyyy-MM-dd hh:mm'}}</td>
+      <tr *ngFor="let book of books">
+        <td>{{book.title}}</td>
+        <td class="hide-on-small-only">{{book.author}}</td>
+        <td class="hide-on-med-and-down">{{book.date | date: 'yyyy-MM-dd hh:mm'}}</td>
         <td class="hide-on-small-only">
-          <button class="btn-floating waves-effect waves-light cyan lighten-2">
-            <i class="material-icons">delete</i>
-          </button>
           <button class="btn-floating waves-effect waves-light green lighten-2">
             <i class="material-icons">file_download</i>
           </button>

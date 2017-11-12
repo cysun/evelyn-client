@@ -6,20 +6,26 @@ import { MaterializeModule } from 'angular2-materialize/dist';
 
 import { AppComponent } from './app.component';
 import { BookmarksComponent } from './components/bookmarks/bookmarks.component';
+import { BooksComponent } from './components/books/books.component';
 import { LoginComponent } from './components/login/login.component';
+import { SearchComponent } from './components/search/search.component';
 import { AuthGuard } from './core/auth.guard';
 import { CoreModule } from './core/core.module';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, pathMatch: 'full' },
-  { path: 'bookmarks', component: BookmarksComponent, canActivate: [AuthGuard] }
+  { path: 'bookmarks', component: BookmarksComponent, canActivate: [AuthGuard] },
+  { path: 'books', component: BooksComponent, canActivate: [AuthGuard] },
+  { path: 'search', component: SearchComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    BookmarksComponent
+    BookmarksComponent,
+    BooksComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

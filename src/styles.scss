@@ -1,7 +1,7 @@
 @import "~materialize-css/sass/components/_color.scss";
 $roboto-font-path: "~materialize-css/dist/fonts/roboto/";
 $primary-color: color("teal", "base");
-$secondary-color: color("indigo", "lighten-1");
+$secondary-color: color("teal", "lighten-1");
 @import "~materialize-css/sass/materialize.scss";
 body {
   display: flex;

@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  login(form: any): void {
+  login(): void {
     this.authService.login(this.username, this.password).subscribe(data => {
       localStorage.setItem('jwtToken', data.token);
       localStorage.setItem('currentUser', JSON.stringify(jwtDecode(data.token)));

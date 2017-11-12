@@ -4,10 +4,10 @@
     <div class="col s12">
       <ul class="tabs" materialize="tabs">
         <li class="tab col s3">
-          <a class="active">Recently Viewed</a>
+          <a [routerLink]="['/bookmarks']">Recently Viewed</a>
         </li>
         <li class="tab col s3">
-          <a [routerLink]="['/books']">Recently Updated</a>
+          <a class="active">Recently Updated</a>
         </li>
         <li class="tab col s3">
           <a [routerLink]="['/search']">Search</a>
@@ -16,7 +16,7 @@
     </div>
   </div>
 
-  <table *ngIf="bookmarks.length" class="bordered highlight">
+  <table *ngIf="books.length" class="bordered highlight">
     <thead>
       <tr>
         <th>Book</th>
@@ -26,14 +26,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let bookmark of bookmarks">
-        <td>{{bookmark.book.title}}</td>
-        <td class="hide-on-small-only">{{bookmark.book.author}}</td>
-        <td class="hide-on-med-and-down">{{bookmark.date | date:'yyyy-MM-dd hh:mm'}}</td>
+      <tr *ngFor="let book of books">
+        <td>{{book.title}}</td>
+        <td class="hide-on-small-only">{{book.author}}</td>
+        <td class="hide-on-med-and-down">{{book.date | date: 'yyyy-MM-dd hh:mm'}}</td>
         <td class="hide-on-small-only">
-          <button class="btn-floating waves-effect waves-light cyan lighten-2">
-            <i class="material-icons">delete</i>
-          </button>
           <button class="btn-floating waves-effect waves-light green lighten-2">
             <i class="material-icons">file_download</i>
           </button>

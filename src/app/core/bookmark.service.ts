@@ -3,12 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
 import { Bookmark } from '../models/bookmark.model';
-import { AuthService } from './auth.service';
 
 @Injectable()
 export class BookmarkService {
 
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient) { }
 
   getBookmarks(): Observable<Bookmark[]> {
     return this.http.get<Bookmark[]>('/api/bookmarks');
