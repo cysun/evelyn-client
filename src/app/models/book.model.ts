@@ -1,10 +1,14 @@
 export class Book {
 
-    id: string;
+    _id: number;
     title: string;
     author: string;
     notes: string;
-    coverExt: string;
+    contentFile: string;
+    htmlFile: string;
+    ebookFile: string;
+    coverFile: string;
+    thumbnailFile: string;
     date: Date;
 
 }

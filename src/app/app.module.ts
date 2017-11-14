@@ -11,10 +11,12 @@ import { LoginComponent } from './components/login/login.component';
 import { SearchComponent } from './components/search/search.component';
 import { AuthGuard } from './core/auth.guard';
 import { CoreModule } from './core/core.module';
+import { AddBookComponent } from './components/add-book/add-book.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, pathMatch: 'full' },
   { path: 'bookmarks', component: BookmarksComponent, canActivate: [AuthGuard] },
+  { path: 'books/add', component: AddBookComponent, canActivate: [AuthGuard] },
   { path: 'books', component: BooksComponent, canActivate: [AuthGuard] },
   { path: 'search', component: SearchComponent, canActivate: [AuthGuard] }
 ];
@@ -25,7 +27,8 @@ const routes: Routes = [
     LoginComponent,
     BookmarksComponent,
     BooksComponent,
-    SearchComponent
+    SearchComponent,
+    AddBookComponent
   ],
   imports: [
     BrowserModule,
