@@ -19,4 +19,14 @@ export class BookService {
     });
   }
 
+  addBook(book: Book, content: File, cover: File): Observable<Book> {
+    const formData = new FormData();
+    formData.append('author', book.author);
+    formData.append('title', book.title);
+    formData.append('content', content);
+    if (book.notes) { formData.append('notes', book.notes); }
+    if (cover) { formData.append('cover', cover); }
+    return this.http.post<Book>('/api/books', formData);
+  }
+
 }

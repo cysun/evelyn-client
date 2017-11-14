@@ -19,6 +19,7 @@
   <table *ngIf="books.length" class="bordered highlight">
     <thead>
       <tr>
+        <th></th>
         <th>Book</th>
         <th class="hide-on-small-only">Author</th>
         <th class="hide-on-med-and-down">Last Viewed</th>
@@ -26,12 +27,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let book of books">
+      <tr *ngFor="let book of books; let i=index;">
+        <td>
+          <img *ngIf="books[i].thumbnailFile" src="/api/files/{{book.thumbnailFile}}" alt="thumbnail" class="responsive-img">
+        </td>
         <td>{{book.title}}</td>
         <td class="hide-on-small-only">{{book.author}}</td>
         <td class="hide-on-med-and-down">{{book.date | date: 'yyyy-MM-dd hh:mm'}}</td>
         <td class="hide-on-small-only">
-          <button class="btn-floating waves-effect waves-light green lighten-2">
+          <button class="btn-floating waves-effect waves-light green lighten-2" (click)="download(i)">
             <i class="material-icons">file_download</i>
           </button>
           <button class="btn-floating waves-effect waves-light blue lighten-2">

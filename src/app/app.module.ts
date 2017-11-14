@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { MaterializeModule } from 'angular2-materialize/dist';
+import { CookieModule } from 'ngx-cookie';
 
 import { AppComponent } from './app.component';
 import { BookmarksComponent } from './components/bookmarks/bookmarks.component';
@@ -35,6 +36,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     MaterializeModule,
     FormsModule,
+    CookieModule.forRoot(),
     CoreModule
   ],
   providers: [],
