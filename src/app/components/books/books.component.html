@@ -35,9 +35,12 @@
         <td class="hide-on-small-only">{{book.author}}</td>
         <td class="hide-on-med-and-down">{{book.date | date: 'yyyy-MM-dd hh:mm'}}</td>
         <td class="hide-on-small-only">
-          <button class="btn-floating waves-effect waves-light green lighten-2" (click)="download(i)">
+          <a class="btn-floating waves-effect waves-light green lighten-2" href="/api/files/{{book.contentFile}}">
             <i class="material-icons">file_download</i>
-          </button>
+          </a>
+          <a class="btn-floating waves-effect waves-light amber" href="/api/files/{{book.ebookFile}}">
+            <i class="material-icons">book</i>
+          </a>
           <button class="btn-floating waves-effect waves-light blue lighten-2">
             <i class="material-icons">edit</i>
           </button>
