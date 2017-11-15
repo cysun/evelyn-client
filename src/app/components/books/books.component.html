@@ -27,9 +27,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let book of books; let i=index;">
+      <tr *ngFor="let book of books">
         <td>
-          <img *ngIf="books[i].thumbnailFile" src="/api/files/{{book.thumbnailFile}}" alt="thumbnail" class="responsive-img">
+          <img *ngIf="book.thumbnailFile" src="/api/files/{{book.thumbnailFile}}" alt="thumbnail" class="responsive-img">
         </td>
         <td>{{book.title}}</td>
         <td class="hide-on-small-only">{{book.author}}</td>
@@ -41,7 +41,7 @@
           <a class="btn-floating waves-effect waves-light amber" href="/api/files/{{book.ebookFile}}">
             <i class="material-icons">book</i>
           </a>
-          <button class="btn-floating waves-effect waves-light blue lighten-2">
+          <button class="btn-floating waves-effect waves-light blue lighten-2" (click)="editBook(book)">
             <i class="material-icons">edit</i>
           </button>
         </td>
