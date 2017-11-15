@@ -2,6 +2,11 @@ import { Component, OnInit, HostBinding, OnDestroy, Renderer2, ViewChild, Elemen
 import { Book } from '../../models/book.model';
 import { BookService } from '../../core/book.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AfterViewChecked, AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { BookmarkService } from '../../core/bookmark.service';
+import { Bookmark } from '../../models/bookmark.model';
+import { DomSanitizer } from '@angular/platform-browser';
+import { SafeHtml } from '@angular/platform-browser/src/security/dom_sanitization_service';
 
 declare var jQuery: any;
 
@@ -10,11 +15,13 @@ declare var jQuery: any;
   templateUrl: './view-book.component.html',
   styleUrls: ['./view-book.component.scss']
 })
-export class ViewBookComponent implements OnInit, OnDestroy {
+export class ViewBookComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('display') el: ElementRef;
 
-  content: string;
+  bookId: string;
+  content: SafeHtml;
+  bookmark: Bookmark;
 
   fontSize: number;
   backgroundClass = 'day';
@@ -27,21 +34,55 @@ export class ViewBookComponent implements OnInit, OnDestroy {
     };
   }
 
-  constructor(private bookService: BookService, private router: Router,
-    private route: ActivatedRoute, private renderer: Renderer2) { }
+  // Code from http://blog.sodhanalibrary.com/2016/10/detect-when-user-stops-scrolling-using.html
+  _timeout: any = null;
+
+  constructor(private bookService: BookService, private bookmarkService: BookmarkService,
+    private router: Router, private route: ActivatedRoute,
+    private renderer: Renderer2, private sanitizer: DomSanitizer) {
+    window.onscroll = () => {
+      if (this._timeout) {
+        window.clearTimeout(this._timeout);
+      }
+      this._timeout = setTimeout(() => {
+        this._timeout = null;
+        const position = jQuery('p:in-viewport').first().attr('data-index');
+        if (position) {
+          this.bookmarkService.updateBookmark(this.bookId, position
+          ).subscribe(() => { });
+        }
+      }, 1500);
+    };
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.bookService.getBookContent(params['id']).
-        subscribe(content => {
-          this.content = content;
-        });
+      this.bookId = params['id'];
+      this.bookService.getBookContent(this.bookId).subscribe(content => {
+        this.content = this.sanitizer.bypassSecurityTrustHtml(content);
+      });
     });
     this.renderer.addClass(document.body, this.backgroundClass);
   }
 
   ngOnDestroy(): void {
+    window.onscroll = null;
     this.renderer.removeClass(document.body, this.backgroundClass);
+  }
+
+  ngAfterViewInit(): void {
+    this.bookmarkService.getBookmark(this.bookId).subscribe(bookmark => {
+      if (bookmark) {
+        this.bookmark = bookmark;
+        jQuery(window)
+          .scrollTop(jQuery('p[data-index="' + this.bookmark.position + '"]')
+            .offset().top);
+      } else {
+        this.bookmarkService.addBookmark(this.bookId, 1).subscribe(
+          newBookmark => this.bookmark = newBookmark
+        );
+      }
+    });
   }
 
   toggleBackground(): void {

@@ -13,7 +13,7 @@
           </a>
         </li>
         <li>
-          <a class="delete-views modal-trigger" href="#delete-views-confirm">
+          <a class="modal-trigger" href="#delete-bookmarks">
             <i class="material-icons">delete_sweep</i>
           </a>
         </li>
@@ -34,15 +34,15 @@
             <i class="material-icons">refresh</i> Rebuild Index</a>
         </li>
         <li>
-          <a class="delete-views modal-trigger" href="#delete-views-confirm">
-            <i class="material-icons">delete_sweep</i> Delete All Views</a>
+          <a class="modal-trigger" href="#delete-bookmarks">
+            <i class="material-icons">delete_sweep</i> Delete All Bookmarks</a>
         </li>
         <li>
-          <a href="add">
+          <a [routerLink]="['/books/add']">
             <i class="material-icons">library_add</i> Add Book</a>
         </li>
         <li>
-          <a href="logout">
+          <a (click)="logout()">
             <i class="material-icons">exit_to_app</i> Logout</a>
         </li>
       </ul>
@@ -51,8 +51,18 @@
 </header>
 
 <main>
-  <router-outlet></router-outlet>
+  <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
 </main>
+
+<div id="delete-bookmarks" class="modal bottom-sheet" materialize="modal" [materializeActions]="materializeActions">
+  <div class="modal-content">
+    <p>Are you sure you want to delete all bookmarks?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="modal-action modal-close waves-effect waves-red btn-flat" (click)="cancelDeleteBookmarks()">No</button>
+    <button class="modal-action modal-close waves-effect waves-green btn-flat" (click)="confirmDeleteBookmarks()">Yes</button>
+  </div>
+</div>
 
 <footer class="page-footer">
   <div class="footer-copyright">

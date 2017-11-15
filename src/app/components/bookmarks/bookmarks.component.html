@@ -19,6 +19,7 @@
   <table *ngIf="bookmarks.length" class="bordered highlight">
     <thead>
       <tr>
+        <th></th>
         <th>Book</th>
         <th class="hide-on-small-only">Author</th>
         <th class="hide-on-med-and-down">Last Viewed</th>
@@ -27,17 +28,27 @@
     </thead>
     <tbody>
       <tr *ngFor="let bookmark of bookmarks">
-        <td>{{bookmark.book.title}}</td>
+        <td>
+          <a *ngIf="bookmark.book.thumbnailFile" (click)="viewBook(bookmark.book)">
+            <img src="/api/files/{{bookmark.book.thumbnailFile}}" alt="thumbnail" class="responsive-img">
+          </a>
+        </td>
+        <td>
+          <a (click)="viewBook(bookmark.book)">{{bookmark.book.title}}</a>
+        </td>
         <td class="hide-on-small-only">{{bookmark.book.author}}</td>
         <td class="hide-on-med-and-down">{{bookmark.date | date:'yyyy-MM-dd hh:mm'}}</td>
         <td class="hide-on-small-only">
-          <button class="btn-floating waves-effect waves-light cyan lighten-2">
+          <button class="btn-floating waves-effect waves-light red lighten-2" (click)="deleteBookmark(bookmark)">
             <i class="material-icons">delete</i>
           </button>
-          <button class="btn-floating waves-effect waves-light green lighten-2">
+          <a class="btn-floating waves-effect waves-light green lighten-2" href="/api/files/{{bookmark.book.contentFile}}">
             <i class="material-icons">file_download</i>
-          </button>
-          <button class="btn-floating waves-effect waves-light blue lighten-2">
+          </a>
+          <a class="btn-floating waves-effect waves-light amber" href="/api/files/{{bookmark.book.ebookFile}}">
+            <i class="material-icons">book</i>
+          </a>
+          <button class="btn-floating waves-effect waves-light blue lighten-2" (click)="editBook(bookmark.book)">
             <i class="material-icons">edit</i>
           </button>
         </td>

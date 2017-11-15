@@ -1,6 +1,6 @@
 export class User {
 
-    id: string;
+    _id: string;
     username: string;
     email: string;
     exp: number; // exp claim from JWT
