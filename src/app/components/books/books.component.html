@@ -29,9 +29,15 @@
     <tbody>
       <tr *ngFor="let book of books">
         <td>
-          <img *ngIf="book.thumbnailFile" src="/api/files/{{book.thumbnailFile}}" alt="thumbnail" class="responsive-img">
+          <a *ngIf="book.thumbnailFile" (click)="viewBook(book)">
+            <img src="/api/files/{{book.thumbnailFile}}" alt="thumbnail" class="responsive-img">
+          </a>
         </td>
-        <td>{{book.title}}</td>
+        <td>
+          <a (click)="viewBook(book)">
+            {{book.title}}
+          </a>
+        </td>
         <td class="hide-on-small-only">{{book.author}}</td>
         <td class="hide-on-med-and-down">{{book.date | date: 'yyyy-MM-dd hh:mm'}}</td>
         <td class="hide-on-small-only">

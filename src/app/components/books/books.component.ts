@@ -21,6 +21,10 @@ export class BooksComponent implements OnInit {
     });
   }
 
+  viewBook(book: Book): void {
+    this.router.navigate(['books', book._id]);
+  }
+
   editBook(book: Book): void {
     this.router.navigate(['books/edit', book._id]);
   }

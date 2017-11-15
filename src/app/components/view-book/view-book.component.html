@@ -1,0 +1,29 @@
+<div #display class="container flow-text" [innerHTML]="content" [style.font-size.px]="fontSize"></div>
+
+<div class="fixed-action-btn">
+  <a class="btn-floating btn-large" [ngClass]="btnClasses">
+    <i class="large material-icons">more_vert</i>
+  </a>
+  <ul>
+    <li>
+      <a class="btn-floating font-size minus" (click)="decreaseFontSize()">
+        <i class="mdi mdi-magnify-minus"></i>
+      </a>
+    </li>
+    <li>
+      <a class="btn-floating font-size plus" (click)="increaseFontSize()">
+        <i class="mdi mdi-magnify-plus"></i>
+      </a>
+    </li>
+    <li>
+      <a class="btn-floating" (click)="toggleBackground()">
+        <i class="material-icons">brightness_4</i>
+      </a>
+    </li>
+    <li>
+      <a class="btn-floating" [routerLink]="['/books']">
+        <i class="material-icons">home</i>
+      </a>
+    </li>
+  </ul>
+</div>

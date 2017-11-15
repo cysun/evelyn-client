@@ -17,6 +17,10 @@ export class BookService {
     return this.http.get<Book>('/api/books/' + id);
   }
 
+  getBookContent(id): Observable<string> {
+    return this.http.get('/api/files/' + id + '.html', { responseType: 'text' });
+  }
+
   searchBooks(term: string): Observable<Book[]> {
     return this.http.get<Book[]>('/api/books/search', {
       params: new HttpParams().set('term', term)
