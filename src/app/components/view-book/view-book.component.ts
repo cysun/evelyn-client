@@ -15,13 +15,12 @@ declare var jQuery: any;
   templateUrl: './view-book.component.html',
   styleUrls: ['./view-book.component.scss']
 })
-export class ViewBookComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ViewBookComponent implements OnInit, OnDestroy {
 
   @ViewChild('display') el: ElementRef;
 
   bookId: string;
   content: SafeHtml;
-  bookmark: Bookmark;
 
   fontSize: number;
   backgroundClass = 'day';
@@ -60,6 +59,13 @@ export class ViewBookComponent implements OnInit, OnDestroy, AfterViewInit {
       this.bookId = params['id'];
       this.bookService.getBookContent(this.bookId).subscribe(content => {
         this.content = this.sanitizer.bypassSecurityTrustHtml(content);
+        this.bookmarkService.getBookmark(this.bookId).subscribe(bookmark => {
+          if (bookmark) {
+            jQuery(window).scrollTop(jQuery('p[data-index="' + bookmark.position + '"]').offset().top);
+          } else {
+            this.bookmarkService.addBookmark(this.bookId, 1).subscribe(() => { });
+          }
+        });
       });
     });
     this.renderer.addClass(document.body, this.backgroundClass);
@@ -68,21 +74,6 @@ export class ViewBookComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy(): void {
     window.onscroll = null;
     this.renderer.removeClass(document.body, this.backgroundClass);
-  }
-
-  ngAfterViewInit(): void {
-    this.bookmarkService.getBookmark(this.bookId).subscribe(bookmark => {
-      if (bookmark) {
-        this.bookmark = bookmark;
-        jQuery(window)
-          .scrollTop(jQuery('p[data-index="' + this.bookmark.position + '"]')
-            .offset().top);
-      } else {
-        this.bookmarkService.addBookmark(this.bookId, 1).subscribe(
-          newBookmark => this.bookmark = newBookmark
-        );
-      }
-    });
   }
 
   toggleBackground(): void {
