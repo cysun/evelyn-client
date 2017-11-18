@@ -3,6 +3,7 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 import { AuthService } from './core/auth.service';
 import { MaterializeAction } from 'angular2-materialize';
 import { BookmarkService } from './core/bookmark.service';
+import { BookService } from './core/book.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,8 @@ export class AppComponent implements OnInit {
 
   materializeActions = new EventEmitter<string | MaterializeAction>();
 
-  constructor(private authService: AuthService, private bookmarkService: BookmarkService) { }
+  constructor(private authService: AuthService, private bookService: BookService,
+    private bookmarkService: BookmarkService) { }
 
   ngOnInit(): void { this.authService.writeTokenToCookie(); }
 
@@ -38,6 +40,15 @@ export class AppComponent implements OnInit {
         this.childComponent.bookmarks = [];
       }
     });
+  }
+
+  cancelReindexBooks(): void {
+    this.materializeActions.emit({ action: 'modal', params: ['close'] });
+  }
+
+  confirmReindexBooks(): void {
+    this.materializeActions.emit({ action: 'modal', params: ['close'] });
+    this.bookService.reindexBooks().subscribe(() => { });
   }
 
 }

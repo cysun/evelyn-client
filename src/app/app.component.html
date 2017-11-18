@@ -8,7 +8,7 @@
       </a>
       <ul *ngIf="authenticated" class="right hide-on-med-and-down">
         <li>
-          <a class="reindex modal-trigger" href="#reindex-confirm">
+          <a class="modal-trigger" href="#reindex-books">
             <i class="material-icons">insert_chart</i>
           </a>
         </li>
@@ -30,7 +30,7 @@
       </ul>
       <ul *ngIf="authenticated" id="nav-mobile" class="side-nav">
         <li>
-          <a class="reindex modal-trigger" href="#reindex-confirm">
+          <a class="modal-trigger" href="#reindex-books">
             <i class="material-icons">refresh</i> Rebuild Index</a>
         </li>
         <li>
@@ -61,6 +61,16 @@
   <div class="modal-footer">
     <button class="modal-action modal-close waves-effect waves-red btn-flat" (click)="cancelDeleteBookmarks()">No</button>
     <button class="modal-action modal-close waves-effect waves-green btn-flat" (click)="confirmDeleteBookmarks()">Yes</button>
+  </div>
+</div>
+
+<div id="reindex-books" class="modal bottom-sheet" materialize="modal" [materializeActions]="materializeActions">
+  <div class="modal-content">
+    <p>Are you sure you want to reindex all books?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="modal-action modal-close waves-effect waves-red btn-flat" (click)="cancelReindexBooks()">No</button>
+    <button class="modal-action modal-close waves-effect waves-green btn-flat" (click)="confirmReindexBooks()">Yes</button>
   </div>
 </div>
 

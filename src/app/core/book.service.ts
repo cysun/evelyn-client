@@ -27,6 +27,10 @@ export class BookService {
     });
   }
 
+  reindexBooks(): Observable<string> {
+    return this.http.get('/api/books/reindex', { responseType: 'text' });
+  }
+
   addBook(book: Book, content: File, cover: File): Observable<Book> {
     const formData = new FormData();
     formData.append('author', book.author);

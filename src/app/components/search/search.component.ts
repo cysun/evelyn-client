@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 
 import { BookService } from '../../core/book.service';
 import { Book } from '../../models/book.model';
@@ -11,7 +11,7 @@ declare var Materialize: any;
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
-export class SearchComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class SearchComponent implements OnInit, AfterViewChecked {
 
   term: string;
   books: Book[] = [];
@@ -23,12 +23,6 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.search();
   }
 
-  ngOnDestroy() {
-    if (this.term) {
-      sessionStorage.setItem('term', this.term);
-    }
-  }
-
   ngAfterViewChecked(): void {
     Materialize.updateTextFields();
   }
@@ -38,6 +32,7 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.bookService.searchBooks(this.term).subscribe(data => {
         this.books = data;
       });
+      sessionStorage.setItem('term', this.term);
     }
   }
 
