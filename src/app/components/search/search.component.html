@@ -19,12 +19,15 @@
   <form #f="ngForm" (ngSubmit)="search()">
     <div class="row valign-wrapper left-align">
       <div class="input-field col s8">
-        <input autofocus id="term" name="term" type="text" required [(ngModel)]="term">
+        <input id="term" name="term" type="text" required [(ngModel)]="term">
         <label class="active" for="term">Term</label>
       </div>
       <div class="col s4 left-align">
         <button class="btn waves-effect waves-light" type="submit" [disabled]="!f.form.valid">
           <i class="material-icons">search</i>
+        </button>
+        <button class="btn waves-effect waves-light orange" type="reset" [disabled]="!f.form.valid" (click)="clear()">
+          <i class="material-icons">close</i>
         </button>
       </div>
     </div>
@@ -33,22 +36,35 @@
   <table *ngIf="books.length" class="bordered highlight">
     <thead>
       <tr>
+        <th></th>
         <th>Book</th>
         <th class="hide-on-small-only">Author</th>
-        <th class="hide-on-med-and-down">Last Viewed</th>
+        <th class="hide-on-med-and-down">Last Updated</th>
         <th class="hide-on-small-only"></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let book of books">
-        <td>{{book.title}}</td>
+        <td>
+          <a *ngIf="book.thumbnailFile" (click)="viewBook(book)">
+            <img src="/api/files/{{book.thumbnailFile}}" alt="thumbnail" class="responsive-img">
+          </a>
+        </td>
+        <td>
+          <a (click)="viewBook(book)">
+            {{book.title}}
+          </a>
+        </td>
         <td class="hide-on-small-only">{{book.author}}</td>
         <td class="hide-on-med-and-down">{{book.date | date: 'yyyy-MM-dd hh:mm'}}</td>
         <td class="hide-on-small-only">
-          <button class="btn-floating waves-effect waves-light green lighten-2">
+          <a class="btn-floating waves-effect waves-light green lighten-2" href="/api/files/{{book.contentFile}}">
             <i class="material-icons">file_download</i>
-          </button>
-          <button class="btn-floating waves-effect waves-light blue lighten-2">
+          </a>
+          <a class="btn-floating waves-effect waves-light amber" href="/api/files/{{book.ebookFile}}">
+            <i class="material-icons">book</i>
+          </a>
+          <button class="btn-floating waves-effect waves-light blue lighten-2" (click)="editBook(book)">
             <i class="material-icons">edit</i>
           </button>
         </td>

@@ -22,6 +22,8 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('jwtToken');
+    sessionStorage.clear();
+    this.cookieService.remove('jwtToken');
     this.router.navigate(['']);
   }
 

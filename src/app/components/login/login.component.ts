@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.username, this.password).subscribe(data => {
       localStorage.setItem('jwtToken', data.token);
       localStorage.setItem('currentUser', JSON.stringify(jwtDecode(data.token)));
+      this.authService.writeTokenToCookie();
       this.materializeActions.emit({ action: 'modal', params: ['close'] });
       this.router.navigate(['bookmarks']);
     }, err => {
