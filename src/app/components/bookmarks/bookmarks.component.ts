@@ -35,4 +35,8 @@ export class BookmarksComponent implements OnInit {
       this.bookmarks.splice(this.bookmarks.indexOf(bookmark), 1));
   }
 
+  search(term: string): void {
+    this.router.navigate(['search'], { queryParams: { term } });
+  }
+
 }

@@ -29,4 +29,8 @@ export class BooksComponent implements OnInit {
     this.router.navigate(['books/edit', book._id]);
   }
 
+  search(term: string): void {
+    this.router.navigate(['search'], { queryParams: { term } });
+  }
+
 }

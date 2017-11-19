@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewChecked } from '@angular/core';
 
 import { BookService } from '../../core/book.service';
 import { Book } from '../../models/book.model';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 declare var Materialize: any;
 
@@ -16,18 +16,24 @@ export class SearchComponent implements OnInit, AfterViewChecked {
   term: string;
   books: Book[] = [];
 
-  constructor(private bookService: BookService, private router: Router) { }
+  constructor(private bookService: BookService, private router: Router,
+    private route: ActivatedRoute, ) { }
 
   ngOnInit() {
-    this.term = sessionStorage.getItem('term');
-    this.search();
+    this.route.queryParams.subscribe(params => {
+      this.term = params['term'] || sessionStorage.getItem('term');
+      this.search();
+    });
   }
 
   ngAfterViewChecked(): void {
     Materialize.updateTextFields();
   }
 
-  search(): void {
+  search(term?: string): void {
+    if (term) {
+      this.term = term;
+    }
     if (this.term) {
       this.bookService.searchBooks(this.term).subscribe(data => {
         this.books = data;
