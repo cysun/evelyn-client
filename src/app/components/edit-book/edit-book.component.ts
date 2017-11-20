@@ -48,10 +48,7 @@ export class EditBookComponent implements OnInit, AfterViewChecked {
 
   saveBook() {
     this.bookService.updateBook(this.book, this.content, this.cover, this.append)
-      .subscribe(
-      () => this.router.navigate(['books']),
-      err => console.log(err)
-      );
+      .subscribe(() => this.router.navigate(['books']), err => console.log(err));
   }
 
 }

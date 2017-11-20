@@ -16,6 +16,8 @@ export class AppComponent implements OnInit {
 
   materializeActions = new EventEmitter<string | MaterializeAction>();
 
+  ebooksUpdateInProgress = false;
+
   constructor(private authService: AuthService, private bookService: BookService,
     private bookmarkService: BookmarkService) { }
 
@@ -49,6 +51,18 @@ export class AppComponent implements OnInit {
   confirmReindexBooks(): void {
     this.materializeActions.emit({ action: 'modal', params: ['close'] });
     this.bookService.reindexBooks().subscribe(() => { });
+  }
+
+  cancelUpdateEbooks(): void {
+    this.materializeActions.emit({ action: 'modal', params: ['close'] });
+  }
+
+  confirmUpdateEbooks(): void {
+    this.materializeActions.emit({ action: 'modal', params: ['close'] });
+    this.ebooksUpdateInProgress = true;
+    this.bookService.updateEbooks().subscribe(() => {
+      this.ebooksUpdateInProgress = false;
+    });
   }
 
 }

@@ -47,7 +47,7 @@
           <a class="btn-floating waves-effect waves-light green lighten-2" href="/api/files/{{bookmark.book.contentFile}}">
             <i class="material-icons">file_download</i>
           </a>
-          <a class="btn-floating waves-effect waves-light amber" href="/api/files/{{bookmark.book.ebookFile}}">
+          <a *ngIf="bookmark.book.ebookFile" class="btn-floating waves-effect waves-light amber" href="/api/files/{{bookmark.book.ebookFile}}">
             <i class="material-icons">book</i>
           </a>
           <button class="btn-floating waves-effect waves-light blue lighten-2" (click)="editBook(bookmark.book)">

@@ -9,12 +9,17 @@
       <ul *ngIf="authenticated" class="right hide-on-med-and-down">
         <li>
           <a class="modal-trigger" href="#reindex-books">
-            <i class="material-icons">insert_chart</i>
+            <i class="mdi mdi-pine-tree"></i>
+          </a>
+        </li>
+        <li>
+          <a *ngIf="!ebooksUpdateInProgress" class="modal-trigger" href="#update-ebooks">
+            <i class="mdi mdi-book-multiple"></i>
           </a>
         </li>
         <li>
           <a class="modal-trigger" href="#delete-bookmarks">
-            <i class="material-icons">delete_sweep</i>
+            <i class="mdi mdi-bookmark-remove"></i>
           </a>
         </li>
         <li>
@@ -31,11 +36,15 @@
       <ul *ngIf="authenticated" id="nav-mobile" class="side-nav">
         <li>
           <a class="modal-trigger" href="#reindex-books">
-            <i class="material-icons">refresh</i> Rebuild Index</a>
+            <i class="mdi mdi-pine-tree"></i> Rebuild Index</a>
+        </li>
+        <li>
+          <a *ngIf="!ebooksUpdateInProgress" class="modal-trigger" href="#update-ebooks">
+            <i class="mdi mdi-book-multiple"></i> Update Ebooks</a>
         </li>
         <li>
           <a class="modal-trigger" href="#delete-bookmarks">
-            <i class="material-icons">delete_sweep</i> Delete All Bookmarks</a>
+            <i class="mdi mdi-bookmark-remove"></i> Delete All Bookmarks</a>
         </li>
         <li>
           <a [routerLink]="['/books/add']">
@@ -71,6 +80,16 @@
   <div class="modal-footer">
     <button class="modal-action modal-close waves-effect waves-red btn-flat" (click)="cancelReindexBooks()">No</button>
     <button class="modal-action modal-close waves-effect waves-green btn-flat" (click)="confirmReindexBooks()">Yes</button>
+  </div>
+</div>
+
+<div id="update-ebooks" class="modal bottom-sheet" materialize="modal" [materializeActions]="materializeActions">
+  <div class="modal-content">
+    <p>Do you want to update ebooks?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="modal-action modal-close waves-effect waves-red btn-flat" (click)="cancelUpdateEbooks()">No</button>
+    <button class="modal-action modal-close waves-effect waves-green btn-flat" (click)="confirmUpdateEbooks()">Yes</button>
   </div>
 </div>
 

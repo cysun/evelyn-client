@@ -41,7 +41,7 @@ export class BookService {
     return this.http.post<Book>('/api/books', formData);
   }
 
-  updateBook(book: Book, content: File, cover: File, append: boolean): Observable<Book> {
+  updateBook(book: Book, content: File, cover: File, append: boolean): Observable<string> {
     const formData = new FormData();
     formData.append('author', book.author);
     formData.append('title', book.title);
@@ -49,7 +49,11 @@ export class BookService {
     if (content) { formData.append('content', content); }
     if (cover) { formData.append('cover', cover); }
     if (append) { formData.append('append', 'true'); }
-    return this.http.put<Book>('/api/books/' + book._id, formData);
+    return this.http.put('/api/books/' + book._id, formData, { responseType: 'text' });
+  }
+
+  updateEbooks(): Observable<string> {
+    return this.http.get('/api/books/ebooks', { responseType: 'text' });
   }
 
 }
