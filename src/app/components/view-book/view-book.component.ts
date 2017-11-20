@@ -15,12 +15,13 @@ declare var jQuery: any;
   templateUrl: './view-book.component.html',
   styleUrls: ['./view-book.component.scss']
 })
-export class ViewBookComponent implements OnInit, OnDestroy {
+export class ViewBookComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   @ViewChild('display') el: ElementRef;
 
   bookId: string;
   content: SafeHtml;
+  position: number;
 
   fontSize: number;
   backgroundClass = 'day';
@@ -45,9 +46,9 @@ export class ViewBookComponent implements OnInit, OnDestroy {
       }
       this._timeout = setTimeout(() => {
         this._timeout = null;
-        const position = jQuery('p:in-viewport').first().attr('data-index');
-        if (position) {
-          this.bookmarkService.updateBookmark(this.bookId, position
+        this.position = jQuery('p:in-viewport').first().attr('data-index');
+        if (this.position) {
+          this.bookmarkService.updateBookmark(this.bookId, this.position
           ).subscribe(() => { });
         }
       }, 1500);
@@ -61,9 +62,10 @@ export class ViewBookComponent implements OnInit, OnDestroy {
         this.content = this.sanitizer.bypassSecurityTrustHtml(content);
         this.bookmarkService.getBookmark(this.bookId).subscribe(bookmark => {
           if (bookmark) {
-            jQuery(window).scrollTop(jQuery('p[data-index="' + bookmark.position + '"]').offset().top);
+            this.position = bookmark.position;
           } else {
-            this.bookmarkService.addBookmark(this.bookId, 1).subscribe(() => { });
+            this.position = 1;
+            this.bookmarkService.addBookmark(this.bookId, this.position).subscribe(() => { });
           }
         });
       });
@@ -74,6 +76,12 @@ export class ViewBookComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     window.onscroll = null;
     this.renderer.removeClass(document.body, this.backgroundClass);
+  }
+
+  ngAfterViewChecked(): void {
+    if (this.position) {
+      jQuery(window).scrollTop(jQuery('p[data-index="' + this.position + '"]').offset().top);
+    }
   }
 
   toggleBackground(): void {
