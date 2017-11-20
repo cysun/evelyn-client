@@ -2,7 +2,6 @@ import { Component, OnInit, HostBinding, OnDestroy, Renderer2, ViewChild, Elemen
 import { Book } from '../../models/book.model';
 import { BookService } from '../../core/book.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AfterViewChecked, AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { BookmarkService } from '../../core/bookmark.service';
 import { Bookmark } from '../../models/bookmark.model';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -15,7 +14,7 @@ declare var jQuery: any;
   templateUrl: './view-book.component.html',
   styleUrls: ['./view-book.component.scss']
 })
-export class ViewBookComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class ViewBookComponent implements OnInit, OnDestroy {
 
   @ViewChild('display') el: ElementRef;
 
@@ -63,6 +62,7 @@ export class ViewBookComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.bookmarkService.getBookmark(this.bookId).subscribe(bookmark => {
           if (bookmark) {
             this.position = bookmark.position;
+            this.gotoBookmark();
           } else {
             this.position = 1;
             this.bookmarkService.addBookmark(this.bookId, this.position).subscribe(() => { });
@@ -78,12 +78,6 @@ export class ViewBookComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.renderer.removeClass(document.body, this.backgroundClass);
   }
 
-  ngAfterViewChecked(): void {
-    if (this.position) {
-      jQuery(window).scrollTop(jQuery('p[data-index="' + this.position + '"]').offset().top);
-    }
-  }
-
   toggleBackground(): void {
     this.renderer.removeClass(document.body, this.backgroundClass);
     this.backgroundClass = this.backgroundClass === 'day' ? 'night' : 'day';
@@ -96,6 +90,10 @@ export class ViewBookComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   decreaseFontSize() {
     this.fontSize = parseFloat(jQuery(this.el.nativeElement).css('font-size')) / 1.2;
+  }
+
+  gotoBookmark() {
+    jQuery(window).scrollTop(jQuery('p[data-index="' + this.position + '"]').offset().top);
   }
 
 }
